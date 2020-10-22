@@ -1,11 +1,23 @@
-import { server } from "./app";
+require("dotenv").config();
 
-const port = process.env.PORT || 5000;
+const mongoose = require("mongoose");
+const { server } = require("./app");
 
-server.listen(port).then(({ url, err }) => {
-    if (err) {
+Promise.all([
+    server.listen(process.env.PORT),
+    mongoose.connect(process.env.MONGO_CONNECTION_STRING, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+        useFindAndModify: false,
+    }),
+])
+    .then(([{ url, err }]) => {
+        if (err) {
+            console.error(`ERROR: ${err.message}`);
+        } else {
+            console.log(`🚀 Listening on port ${url}`);
+        }
+    })
+    .catch((err) => {
         console.error(`ERROR: ${err.message}`);
-    } else {
-        console.log(`🚀 Listening on port ${url}`);
-    }
-});
+    });
