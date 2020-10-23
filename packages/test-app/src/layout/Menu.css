@@ -1,0 +1,13 @@
+.menu .mdc-list-item a {
+    display: flex;
+    align-items: center;
+
+    text-decoration: none;
+    color: black;
+
+    width: 100%;
+}
+
+.menu .mdc-list-item a.active {
+    color: var(--mdc-theme-primary, #6200ee)
+}
