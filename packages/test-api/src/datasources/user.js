@@ -1,5 +1,13 @@
+import { Types } from "mongoose";
+
 // Model
-import { userModel } from "../models";
+import { userModel, USER_ROLE_ENUM } from "../models";
+
+const USER_ROLE_COMPATIBILITY = {
+    [USER_ROLE_ENUM.INTERN]: [USER_ROLE_ENUM.SQUAD_MEMBER],
+    [USER_ROLE_ENUM.SQUAD_MEMBER]: [USER_ROLE_ENUM.INTERN, USER_ROLE_ENUM.SQUAD_LEADER],
+    [USER_ROLE_ENUM.SQUAD_LEADER]: [USER_ROLE_ENUM.SQUAD_MEMBER],
+};
 
 export function userDatasource(dataLoaders) {
     return {
@@ -9,7 +17,15 @@ export function userDatasource(dataLoaders) {
          * Find all users
          * @param {object} filter Filter object.
          */
-        findUsers(filter) {
+        findUsers({ role, userId } = {}) {
+            const filter = {};
+            if (role) {
+                filter.role = role;
+            }
+            if (userId) {
+                filter._id = userId;
+            }
+
             return userModel.find(filter).lean();
         },
 
@@ -31,12 +47,49 @@ export function userDatasource(dataLoaders) {
 
         /**
          * Add a user.
+         * @param {string} userId User own identifier.
          * @param {string} email User own email.
-         * @param {*} firstName User own first name.
-         * @param {*} lastName User own last name.
-         * @param {*} role User own role.
+         * @param {string} firstName User own first name.
+         * @param {string} lastName User own last name.
+         * @param {string} role User own role.
          */
-        addUser(email, firstName, lastName, role) {
+        upsertUser(userId, email, firstName, lastName, role) {
+            if (userId && !Types.ObjectId.isValid(userId)) {
+                throw new Error("Invalid userId");
+            }
+            if (!email || !email.trim()) {
+                throw new Error("Missing email");
+            }
+            if (!firstName || !firstName.trim()) {
+                throw new Error("Missing firstName");
+            }
+            if (!lastName || !lastName.trim()) {
+                throw new Error("Missing lastName");
+            }
+            if (!role || !role.trim()) {
+                throw new Error("Missing role");
+            }
+
+            if (userId) {
+                return dataLoaders.load(userId).then((user) => {
+                    if (!user) {
+                        throw new Error("Unknown user");
+                    }
+
+                    if (user.role !== role && !USER_ROLE_COMPATIBILITY[user.role].includes(role)) {
+                        throw new Error("Invalid user promotion");
+                    }
+
+                    return userModel
+                        .findByIdAndUpdate({ _id: userId }, { email, firstName, lastName }, { new: true })
+                        .then((usr) => usr.toObject());
+                });
+            }
+
+            if (role !== USER_ROLE_ENUM.INTERN) {
+                throw new Error("User must start as an Intern");
+            }
+
             return userModel.create({ email, firstName, lastName, role }).then((user) => user.toObject());
         },
     };

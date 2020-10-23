@@ -15,7 +15,13 @@ function responsify(promise, success) {
 export const mutationResolvers = {
     addUser(_parent, { email, firstName, lastName, role }, { dataSources }) {
         return responsify(
-            () => dataSources.users.addUser(email, firstName, lastName, role),
+            () => dataSources.users.upsertUser(undefined, email, firstName, lastName, role),
+            (user) => ({ user })
+        );
+    },
+    updateUser(_parent, { userId, email, firstName, lastName, role }, { dataSources }) {
+        return responsify(
+            () => dataSources.users.upsertUser(userId, email, firstName, lastName, role),
             (user) => ({ user })
         );
     },
