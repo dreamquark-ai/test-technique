@@ -13,11 +13,11 @@ Promise.all([
 ])
     .then(([{ url, err }]) => {
         if (err) {
-            console.error(`ERROR: ${err.message}`);
+            console.error(`ERROR APOLLO START: ${err.message}`);
         } else {
             console.log(`🚀 Listening on port ${url}`);
         }
     })
     .catch((err) => {
-        console.error(`ERROR: ${err.message}`);
+        console.error(`ERROR MONGO START: ${err.message}`);
     });
