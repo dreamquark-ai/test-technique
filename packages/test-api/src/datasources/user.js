@@ -71,7 +71,7 @@ export function userDatasource(dataLoaders) {
             }
 
             if (userId) {
-                return dataLoaders.load(userId).then((user) => {
+                return dataLoaders.user.load(userId).then((user) => {
                     if (!user) {
                         throw new Error("Unknown user");
                     }
@@ -81,7 +81,7 @@ export function userDatasource(dataLoaders) {
                     }
 
                     return userModel
-                        .findByIdAndUpdate({ _id: userId }, { email, firstName, lastName }, { new: true })
+                        .findByIdAndUpdate({ _id: userId }, { email, firstName, lastName, role }, { new: true })
                         .then((usr) => usr.toObject());
                 });
             }
