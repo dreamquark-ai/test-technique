@@ -1,0 +1,30 @@
+:root {
+    --slider-base-width: 300px;
+}
+
+.c-slider {
+    --slider-width: var(--slider-base-width);
+
+    height: calc(100vh - 64px);
+    overflow-y: auto;
+
+    width: var(--slider-width);
+}
+
+.c-slider--2x {
+    --slider-width: calc(2 * var(--slider-base-width));
+}
+
+.c-slider__header {
+    display: flex;
+}
+
+.c-slider__header div:first-child {
+    flex: 1;
+}
+
+.c-slider__actions {
+    display: flex;
+    align-items: center;
+}
+

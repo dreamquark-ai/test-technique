@@ -8,10 +8,10 @@ export const QueryLoader = ({ loading, error, children }) => {
         return <p><CircularProgress/> Loading...</p>;
     }
     if (error) {
-        return <p>An error occured: {error}</p>;
+        return <p>An error occurred: {error}</p>;
     }
 
-    return children();
+    return typeof children === "function" ? children() : children;
 };
 
 QueryLoader.propTypes = {
