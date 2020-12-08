@@ -1,7 +1,7 @@
 import React from "react";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
-import { Header, Menu } from "./layout";
+import { Header, Menu } from "./components/layout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { TeamDetail, TeamList, UserList } from "./pages";
 

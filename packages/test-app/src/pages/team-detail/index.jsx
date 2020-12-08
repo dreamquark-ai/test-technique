@@ -1,3 +1,1 @@
-import React from "react";
-
-export const TeamDetail = () => <div>TeamDetail</div>;
+export * from "./TeamDetail";

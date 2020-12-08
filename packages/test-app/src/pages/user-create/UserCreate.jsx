@@ -1,41 +1,52 @@
 // Libs
 import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
 import { useFormik, FormikProvider } from "formik";
+import { useMutation } from "@apollo/client";
+import { useHistory, useRouteMatch } from "react-router-dom";
 
 // Graph
-import { UPDATE_USER, USER_ROLE_LABEL } from "../../graph";
+import { USER_ROLE, USER_ROLE_LABEL, ADD_USER } from "../../graph";
 
 // Components
-import { IconButton } from "@rmwc/icon-button";
+import { Button } from "@rmwc/button";
+import { CircularProgress } from "@rmwc/circular-progress";
 import { Snackbar, SnackbarAction } from "@rmwc/snackbar";
 import { Field, FieldRow, Form } from "../../components/form";
-import {
-    Slider,
-    SliderHeader,
-    SliderTitle,
-    SliderSubtitle,
-    SliderContent,
-    SliderActions,
-} from "../../components/slider";
+import { Slider, SliderHeader, SliderTitle, SliderContent, SliderActions } from "../../components/slider";
 
-export const UserDetailEdit = ({ user, goToView, refetch }) => {
+const initialValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    role: USER_ROLE.INTERN,
+};
+
+export function UserCreate({ refetch }) {
     const [error, setError] = useState(undefined);
     const [success, setSuccess] = useState(undefined);
+    const history = useHistory();
+    const { url } = useRouteMatch();
 
     const formik = useFormik({
-        initialValues: user,
-        onSubmit: ({ id, ...value }) => updateUser({ variables: { userId: id, ...value } }),
+        initialValues,
+        onSubmit: (value) => {
+            addUser({
+                variables: value,
+            });
+        },
     });
 
-    const [updateUser] = useMutation(UPDATE_USER, {
+    const [addUser] = useMutation(ADD_USER, {
         onCompleted: (data) => {
-            if (data?.updateUser.error) {
-                setError(data?.updateUser.error);
+            if (data?.addUser.error) {
+                setError(data?.addUser.error);
             } else {
-                setSuccess("Successfully created");
                 refetch();
-                goToView();
+                setSuccess("Successfully created");
+                formik.resetForm({
+                    values: initialValues,
+                });
+                history.push(`${url}/../${data.addUser.user.id}`);
             }
             formik.setSubmitting(false);
         },
@@ -49,16 +60,18 @@ export const UserDetailEdit = ({ user, goToView, refetch }) => {
         <>
             <Slider className="c-slider--2x">
                 <SliderHeader>
-                    <div>
-                        <SliderTitle>User edition</SliderTitle>
-                        <SliderSubtitle>{`${user.firstName} ${user.lastName}`}</SliderSubtitle>
-                    </div>
+                    <SliderTitle>User creation</SliderTitle>
                     <SliderActions>
-                        <IconButton icon="undo" label="Cancel" onClick={goToView} />
-                        <IconButton icon="save" label="Save User" onClick={formik.handleSubmit} />
+                        <SliderActions>
+                            <Button
+                                disabled={formik.isSubmitting}
+                                icon={formik.isSubmitting ? <CircularProgress /> : "save"}
+                                label="Save User"
+                                onClick={formik.handleSubmit}
+                            />
+                        </SliderActions>
                     </SliderActions>
                 </SliderHeader>
-
                 <SliderContent>
                     <FormikProvider value={formik}>
                         <Form>
@@ -66,12 +79,13 @@ export const UserDetailEdit = ({ user, goToView, refetch }) => {
                                 <Field name="firstName" label="First name" type="text" />
                                 <Field name="lastName" label="Last name" type="text" />
                             </FieldRow>
-                            <Field name="email" label="email" type="email" />
+                            <Field name="mail" label="Email" type="email" />
                             <Field enhanced name="role" label="Role" type="text" options={USER_ROLE_LABEL} />
                         </Form>
                     </FormikProvider>
                 </SliderContent>
             </Slider>
+
             <Snackbar
                 open={Boolean(error) || Boolean(success)}
                 onClose={() => (error ? setError(undefined) : setSuccess(undefined))}
@@ -82,4 +96,4 @@ export const UserDetailEdit = ({ user, goToView, refetch }) => {
             />
         </>
     );
-};
+}

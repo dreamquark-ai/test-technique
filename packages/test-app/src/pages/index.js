@@ -1,4 +1,4 @@
-export { TeamDetail } from "./team-detail";
-export { TeamList } from "./team-list";
-export { UserDetail } from "./user-detail";
-export { UserList } from "./user-list";
+export * from "./team-detail";
+export * from "./team-list";
+export * from "./user-detail";
+export * from "./user-list";

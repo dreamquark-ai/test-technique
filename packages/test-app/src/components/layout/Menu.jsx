@@ -1,26 +1,28 @@
 import React from "react";
 
-import { Slider, SliderHeader, SliderTitle, SliderContent } from "../slider";
+import { Slider, SliderContent } from "../slider";
 import { List, ListItem } from "@rmwc/list";
 import { Icon } from "@rmwc/icon";
+import { Tooltip } from "@rmwc/tooltip";
 import { NavLink } from "react-router-dom";
 
 export const Menu = () => (
     <Slider className="c-menu">
-        <SliderHeader>
-            <SliderTitle>Menu</SliderTitle>
-        </SliderHeader>
         <SliderContent>
             <List>
                 <ListItem>
-                    <NavLink to="/users">
-                        <Icon icon="person_search" /> Users
-                    </NavLink>
+                    <Tooltip content="Users" align="right">
+                        <NavLink to="/users">
+                            <Icon icon="person_search" />
+                        </NavLink>
+                    </Tooltip>
                 </ListItem>
                 <ListItem>
-                    <NavLink to="/teams">
-                        <Icon icon="groups" /> Teams
-                    </NavLink>
+                    <Tooltip content="Teams" align="right">
+                        <NavLink to="/teams">
+                            <Icon icon="groups" />
+                        </NavLink>
+                    </Tooltip>
                 </ListItem>
             </List>
         </SliderContent>

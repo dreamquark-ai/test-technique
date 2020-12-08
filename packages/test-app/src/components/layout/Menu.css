@@ -1,5 +1,7 @@
 .c-slider.c-menu {
-    --slider-width: 120px;
+    --slider-width: unset;
+
+    background-color: #ee00a51a;
 }
 
 .c-menu .mdc-list-item a {
@@ -13,5 +15,5 @@
 }
 
 .c-menu .mdc-list-item a.active {
-    color: var(--mdc-theme-primary, #6200ee);
+    color: var(--mdc-theme-primary);
 }
