@@ -1,12 +1,12 @@
 import React from "react";
 
-import { Slider, SliderHeader, SliderTitle, SliderContent } from "../components/Slider";
+import { Slider, SliderHeader, SliderTitle, SliderContent } from "../slider";
 import { List, ListItem } from "@rmwc/list";
 import { Icon } from "@rmwc/icon";
 import { NavLink } from "react-router-dom";
 
 export const Menu = () => (
-    <Slider className="menu">
+    <Slider className="c-menu">
         <SliderHeader>
             <SliderTitle>Menu</SliderTitle>
         </SliderHeader>
