@@ -12,9 +12,9 @@ The following code has been completed in approximately 7h and is here to set an 
 
 Got to: `packages/test-api`
 
-- install dependencies: `npm run i`
+- install dependencies: `npm i`
 - start the database: `npm run mongo-start`
-- start the api: `npm run start`
+- start the api: `npm start`
 
 - stop the database: `npm run mongo-stop`
 
@@ -24,8 +24,8 @@ note: if you want to use another mongo instance, edit the file: `packages/test-a
 
 Go to: `packages/test-app``
 
-- install dependencies: `npm run i`
-- start the ap: `npm run start`
+- install dependencies: `npm i`
+- start the ap: `npm start`
 
 
 xoxo
