@@ -13,8 +13,13 @@ export function teamDatasource(dataLoaders) {
         /**
          * Find all teams.
          */
-        findTeams() {
-            return teamModel.find({}).lean();
+        findTeams({ teamId } = {}) {
+            const filter = {};
+            if (teamId) {
+                filter._id = teamId;
+            }
+
+            return teamModel.find(filter).lean();
         },
 
         /**

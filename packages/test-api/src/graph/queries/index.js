@@ -4,6 +4,6 @@ export const queries = gql`
     type Query {
         users(filter: UsersFilterInput): [User!]!
 
-        teams: [Team!]!
+        teams(filter: TeamsFilterInput): [Team!]!
     }
 `;

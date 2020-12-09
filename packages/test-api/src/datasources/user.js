@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 
 // Model
-import { userModel, USER_ROLE_ENUM } from "../models";
+import { userModel, teamModel, USER_ROLE_ENUM } from "../models";
 
 const USER_ROLE_COMPATIBILITY = {
     [USER_ROLE_ENUM.INTERN]: [USER_ROLE_ENUM.SQUAD_MEMBER],
@@ -80,9 +80,18 @@ export function userDatasource(dataLoaders) {
                         throw new Error("Invalid user promotion");
                     }
 
-                    return userModel
-                        .findByIdAndUpdate({ _id: userId }, { email, firstName, lastName, role }, { new: true })
-                        .then((usr) => usr.toObject());
+                    return teamModel.find({ userIds: userId }).then((teams) => {
+                        if (teams?.length && user.role === USER_ROLE_ENUM.SQUAD_LEADER && role !== USER_ROLE_ENUM.SQUAD_LEADER) {
+                            throw new Error("User is leader in a team cannot demote");
+                        }
+                        if (teams?.length && user.role === USER_ROLE_ENUM.SQUAD_MEMBER && role === USER_ROLE_ENUM.SQUAD_LEADER) {
+                            throw new Error("User is member in a team cannot promote");
+                        }
+
+                        return userModel
+                            .findByIdAndUpdate({ _id: userId }, { email, firstName, lastName, role }, { new: true })
+                            .then((usr) => usr.toObject());
+                    });
                 });
             }
 
