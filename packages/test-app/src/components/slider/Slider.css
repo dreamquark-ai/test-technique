@@ -16,17 +16,3 @@
 .c-slider--2x {
     --slider-width: calc(2 * var(--slider-base-width));
 }
-
-.c-slider__header {
-    display: flex;
-}
-
-.c-slider__header div:first-child {
-    flex: 1;
-}
-
-.c-slider__actions {
-    display: flex;
-    align-items: center;
-}
-

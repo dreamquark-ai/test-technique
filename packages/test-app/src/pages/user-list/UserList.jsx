@@ -9,12 +9,13 @@ import { GET_USERS, USER_ROLE_LABEL } from "../../graph";
 // Components
 import { IconButton } from "@rmwc/icon-button";
 import { List, SimpleListItem } from "@rmwc/list";
+import { Tooltip } from "@rmwc/tooltip";
 import { Slider, SliderHeader, SliderTitle, SliderContent, SliderActions } from "../../components/slider";
 import { QueryLoader } from "../../components/query-loader";
 import { UserCreate } from "../user-create";
 import { UserDetail } from "../user-detail";
 
-export const UserList = () => {
+export function UserList() {
     const { data, refetch, ...state } = useQuery(GET_USERS);
     const history = useHistory();
     const location = useLocation();
@@ -26,9 +27,11 @@ export const UserList = () => {
                 <SliderHeader>
                     <SliderTitle>User list</SliderTitle>
                     <SliderActions>
-                        <Link to={`${url}/create`}>
-                            <IconButton icon="add" label="New User" />
-                        </Link>
+                        <Tooltip content="New User" align="bottom">
+                            <Link to={`${url}/create`}>
+                                <IconButton icon="person_add" label="New User" />
+                            </Link>
+                        </Tooltip>
                     </SliderActions>
                 </SliderHeader>
                 <SliderContent>
@@ -69,4 +72,4 @@ export const UserList = () => {
             </Switch>
         </>
     );
-};
+}

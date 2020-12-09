@@ -3,14 +3,15 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 import { Header, Menu } from "./components/layout";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { TeamDetail, TeamList, UserList } from "./pages";
+import { TeamList } from "./pages/team-list";
+import { UserList } from "./pages/user-list";
 
 const client = new ApolloClient({
     uri: "http://localhost:5000",
     cache: new InMemoryCache(),
 });
 
-function App() {
+export function App() {
     return (
         <div className="app">
             <ApolloProvider client={client}>
@@ -19,10 +20,12 @@ function App() {
                     <div className="sliders-container">
                         <Menu />
                         <Switch>
-                            <Route path="/users" component={UserList} />
-                            
-                            <Route path="/teams" component={TeamList} />
-                            <Route path="/teams/:teamId" component={TeamDetail} />
+                            <Route path="/users">
+                                <UserList />
+                            </Route>
+                            <Route path="/teams">
+                                <TeamList />
+                            </Route>
                         </Switch>
                     </div>
                 </Router>
@@ -30,5 +33,3 @@ function App() {
         </div>
     );
 }
-
-export default App;

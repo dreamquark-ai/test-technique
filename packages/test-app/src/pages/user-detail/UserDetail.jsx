@@ -1,14 +1,17 @@
+// Libs
 import React, { useCallback } from "react";
 import { useQuery } from "@apollo/client";
 import { Switch, Route, useHistory, useParams, useRouteMatch } from "react-router-dom";
 
+// Graph
 import { GET_USER } from "../../graph";
 
+// Components
 import { QueryLoader } from "../../components/query-loader";
 import { UserDetailView } from "./UserDetailView";
 import { UserDetailEdit } from "./UserDetailEdit";
 
-export const UserDetail = ({ refetch: refetchProp }) => {
+export function UserDetail({ refetch: refetchProp }) {
     const { userId } = useParams();
     const history = useHistory();
     const { path, url } = useRouteMatch();
@@ -41,4 +44,4 @@ export const UserDetail = ({ refetch: refetchProp }) => {
             </Switch>
         </QueryLoader>
     );
-};
+}

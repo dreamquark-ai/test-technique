@@ -9,17 +9,11 @@ import { UPDATE_USER, USER_ROLE_LABEL } from "../../graph";
 // Components
 import { IconButton } from "@rmwc/icon-button";
 import { Snackbar, SnackbarAction } from "@rmwc/snackbar";
+import { Tooltip } from "@rmwc/tooltip";
 import { Field, FieldRow, Form } from "../../components/form";
-import {
-    Slider,
-    SliderHeader,
-    SliderTitle,
-    SliderSubtitle,
-    SliderContent,
-    SliderActions,
-} from "../../components/slider";
+import { Slider, SliderHeader, SliderTitle, SliderContent, SliderActions } from "../../components/slider";
 
-export const UserDetailEdit = ({ user, goToView, refetch }) => {
+export function UserDetailEdit({ user, goToView, refetch }) {
     const [error, setError] = useState(undefined);
     const [success, setSuccess] = useState(undefined);
 
@@ -33,7 +27,7 @@ export const UserDetailEdit = ({ user, goToView, refetch }) => {
             if (data?.updateUser.error) {
                 setError(data?.updateUser.error);
             } else {
-                setSuccess("Successfully created");
+                setSuccess("Successfully edited");
                 refetch();
                 goToView();
             }
@@ -49,13 +43,14 @@ export const UserDetailEdit = ({ user, goToView, refetch }) => {
         <>
             <Slider className="c-slider--2x">
                 <SliderHeader>
-                    <div>
-                        <SliderTitle>User edition</SliderTitle>
-                        <SliderSubtitle>{`${user.firstName} ${user.lastName}`}</SliderSubtitle>
-                    </div>
+                    <SliderTitle>Edit User</SliderTitle>
                     <SliderActions>
-                        <IconButton icon="undo" label="Cancel" onClick={goToView} />
-                        <IconButton icon="save" label="Save User" onClick={formik.handleSubmit} />
+                        <Tooltip content="Cancel" align="bottom">
+                            <IconButton icon="undo" label="Cancel" onClick={goToView} />
+                        </Tooltip>
+                        <Tooltip content="Save" align="bottom">
+                            <IconButton icon="save" label="Save User" onClick={formik.handleSubmit} />
+                        </Tooltip>
                     </SliderActions>
                 </SliderHeader>
 
@@ -82,4 +77,4 @@ export const UserDetailEdit = ({ user, goToView, refetch }) => {
             />
         </>
     );
-};
+}

@@ -1,24 +1,29 @@
+// Libs
 import React from "react";
+import PropTypes from "prop-types";
 import classnames from "classnames";
-import { Drawer, DrawerHeader, DrawerTitle, DrawerSubtitle, DrawerContent } from "@rmwc/drawer";
+
+// Components
+import { Drawer, DrawerTitle, DrawerSubtitle } from "@rmwc/drawer";
 
 export const SliderTitle = DrawerTitle;
 export const SliderSubtitle = DrawerSubtitle;
 
-export const SliderContent = ({ children, className, ...otherProps }) => (
-    <DrawerContent className={classnames("c-slider__content", className)} {...otherProps}>
-        {children}
-    </DrawerContent>
-);
-
-export const SliderActions = ({ children }) => <div className="c-slider__actions">{children}</div>;
-
-export const SliderHeader = ({ children }) => <DrawerHeader className="c-slider__header">{children}</DrawerHeader>;
-
-export const Slider = ({ children, className, ...otherProps }) => {
+export function Slider({ children, className, ...otherProps }) {
     return (
         <Drawer className={classnames("c-slider", className)} {...otherProps}>
             {children}
         </Drawer>
     );
+}
+
+Slider.propTypes = {
+    /**
+     * Children to display
+     */
+    children: PropTypes.node,
+    /**
+     * Additional className for content
+     */
+    className: PropTypes.string,
 };

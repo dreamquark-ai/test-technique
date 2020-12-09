@@ -1,20 +1,33 @@
+// Libs
 import React from "react";
 import PropTypes from "prop-types";
 
-import {CircularProgress} from "@rmwc/circular-progress"
+// Components
+import { CircularProgress } from "@rmwc/circular-progress";
 
-export const QueryLoader = ({ loading, error, children }) => {
+export function QueryLoader({ loading, error, children }) {
     if (loading) {
-        return <p><CircularProgress/> Loading...</p>;
+        return (
+            <div>
+                <CircularProgress /> Loading...
+            </div>
+        );
     }
+    
     if (error) {
-        return <p>An error occurred: {error}</p>;
+        return <p>An error occurred: {error?.toString()}</p>;
     }
 
     return typeof children === "function" ? children() : children;
-};
+}
 
 QueryLoader.propTypes = {
+    /**
+     * If is loading
+     */
     loading: PropTypes.bool.isRequired,
-    error: PropTypes.string,
+    /**
+     * If has error
+     */
+    error: PropTypes.any,
 };

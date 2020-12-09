@@ -8,9 +8,10 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { USER_ROLE, USER_ROLE_LABEL, ADD_USER } from "../../graph";
 
 // Components
-import { Button } from "@rmwc/button";
+import { IconButton } from "@rmwc/icon-button";
 import { CircularProgress } from "@rmwc/circular-progress";
 import { Snackbar, SnackbarAction } from "@rmwc/snackbar";
+import { Tooltip } from "@rmwc/tooltip";
 import { Field, FieldRow, Form } from "../../components/form";
 import { Slider, SliderHeader, SliderTitle, SliderContent, SliderActions } from "../../components/slider";
 
@@ -60,15 +61,17 @@ export function UserCreate({ refetch }) {
         <>
             <Slider className="c-slider--2x">
                 <SliderHeader>
-                    <SliderTitle>User creation</SliderTitle>
+                    <SliderTitle>New User</SliderTitle>
                     <SliderActions>
                         <SliderActions>
-                            <Button
-                                disabled={formik.isSubmitting}
-                                icon={formik.isSubmitting ? <CircularProgress /> : "save"}
-                                label="Save User"
-                                onClick={formik.handleSubmit}
-                            />
+                            <Tooltip content="Save User" align="bottom">
+                                <IconButton
+                                    disabled={formik.isSubmitting}
+                                    icon={formik.isSubmitting ? <CircularProgress /> : "save"}
+                                    label="Save User"
+                                    onClick={formik.handleSubmit}
+                                />
+                            </Tooltip>
                         </SliderActions>
                     </SliderActions>
                 </SliderHeader>
@@ -79,8 +82,8 @@ export function UserCreate({ refetch }) {
                                 <Field name="firstName" label="First name" type="text" />
                                 <Field name="lastName" label="Last name" type="text" />
                             </FieldRow>
-                            <Field name="mail" label="Email" type="email" />
-                            <Field enhanced name="role" label="Role" type="text" options={USER_ROLE_LABEL} />
+                            <Field name="email" label="Email" type="email" />
+                            <Field name="role" label="Role" type="text" options={USER_ROLE_LABEL} />
                         </Form>
                     </FormikProvider>
                 </SliderContent>
