@@ -12,7 +12,10 @@ export function Header() {
                 <TopAppBarSection>
                     <TopAppBarTitle>
                         <Link to="/">
-                            TechnicalTest DreamQuark&nbsp;
+                            <span role="img" aria-label="brain">
+                                🧠
+                            </span>
+                            &nbsp;TechnicalTest DreamQuark
                             <span role="img" aria-label="unicorn">
                                 🦄
                             </span>
