@@ -1,7 +1,7 @@
 # Hello guys
 
 Welcome to this dry run of the DQ technical test
-The following code has been completed in approximately 7h and is here to set an example of what to do (or not to do ?)
+The following code has been completed in approximately 10h and is here to set an example of what to do (or not to do ?)
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ note: if you want to use another mongo instance, edit the file: `packages/test-a
 
 ## APP
 
-Go to: `packages/test-app``
+Go to: `packages/test-app`
 
 - install dependencies: `npm i`
 - start the ap: `npm start`
