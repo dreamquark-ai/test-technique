@@ -26,3 +26,27 @@ export const ADD_USER = gql`
         }
     }
 `;
+
+export const UPDATE_TEAM = gql`
+    mutation updateTeam($teamId: ID!, $name: String!, $leaderId: ID!, $memberIds: [ID!]!, $internIds: [ID!]!) {
+        updateTeam(teamId: $teamId, name: $name, leaderId: $leaderId, memberIds: $memberIds, internIds: $internIds) {
+            error
+            team {
+                id
+                name
+            }
+        }
+    }
+`;
+
+export const ADD_TEAM = gql`
+    mutation addTeam($name: String!, $leaderId: ID!, $memberIds: [ID!]!, $internIds: [ID!]!) {
+        addTeam(name: $name, leaderId: $leaderId, memberIds: $memberIds, internIds: $internIds) {
+            error
+            team {
+                id
+                name
+            }
+        }
+    }
+`;
