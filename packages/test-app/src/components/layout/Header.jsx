@@ -2,6 +2,7 @@
 import React from "react";
 
 // Components
+import { Link } from "react-router-dom";
 import { TopAppBar, TopAppBarRow, TopAppBarSection, TopAppBarTitle } from "@rmwc/top-app-bar";
 
 export function Header() {
@@ -10,10 +11,12 @@ export function Header() {
             <TopAppBarRow>
                 <TopAppBarSection>
                     <TopAppBarTitle>
-                        TechnicalTest DreamQuark{" "}
-                        <span role="img" aria-label="unicorn">
-                            🦄
-                        </span>
+                        <Link to="/">
+                            TechnicalTest DreamQuark&nbsp;
+                            <span role="img" aria-label="unicorn">
+                                🦄
+                            </span>
+                        </Link>
                     </TopAppBarTitle>
                 </TopAppBarSection>
             </TopAppBarRow>

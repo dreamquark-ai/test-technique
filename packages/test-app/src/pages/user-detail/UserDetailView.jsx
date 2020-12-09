@@ -48,6 +48,9 @@ export function UserDetailView({ user, goToEdit }) {
                             />
                         ))}
                     </List>
+                    <List twoLine nonInteractive>
+                        {!user.teams?.length && <SimpleListItem text="" secondaryText="In no team" ripple={false} />}
+                    </List>
                 </SliderContent>
             </Slider>
         </>

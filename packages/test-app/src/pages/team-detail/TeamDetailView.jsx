@@ -50,18 +50,30 @@ export function TeamDetailView({ team, goToEdit }) {
                             <ListGroupSubheader>Leader</ListGroupSubheader>
                             <UserLine user={team.leader} />
                         </ListGroup>
+
                         <ListGroup>
                             <ListGroupSubheader>Members</ListGroupSubheader>
                             {team.members.map((member) => (
                                 <UserLine user={member} />
                             ))}
                         </ListGroup>
+                        <List twoLine nonInteractive>
+                            {!team.members?.length && (
+                                <SimpleListItem text="" secondaryText="No member" ripple={false} />
+                            )}
+                        </List>
+
                         <ListGroup>
                             <ListGroupSubheader>Interns</ListGroupSubheader>
                             {team.interns.map((member) => (
                                 <UserLine user={member} />
                             ))}
                         </ListGroup>
+                        <List twoLine nonInteractive>
+                            {!team.interns?.length && (
+                                <SimpleListItem text="" secondaryText="No intern" ripple={false} />
+                            )}
+                        </List>
                     </List>
                 </SliderContent>
             </Slider>
